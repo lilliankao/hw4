@@ -6,7 +6,7 @@ class SessionsController < ApplicationController
     @user = User.find_by({ "email" => params["email"] })
     if @user
       if BCrypt::Password.new(@user["password"]) == params["password"]
-        cookies["user_id"] = @user["id"]
+        session["user_id"] = @user["id"]
         flash["notice"] = "You've logged in."
             # login the user
         redirect_to "/places"
@@ -24,7 +24,6 @@ class SessionsController < ApplicationController
     flash["notice"] = "Goodbye."
     session["user_id"] = nil
     redirect_to "/login"
-    end
   end
 end
   
